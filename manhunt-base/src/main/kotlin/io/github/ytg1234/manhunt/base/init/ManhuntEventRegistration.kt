@@ -7,6 +7,7 @@ import io.github.ytg1234.manhunt.base.UserVars
 import io.github.ytg1234.manhunt.command.ClearCacheCommand
 import io.github.ytg1234.manhunt.command.HuntersCommand
 import io.github.ytg1234.manhunt.command.SpeedrunnerCommand
+import io.github.ytg1234.manhunt.command.TrackCommand
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
@@ -43,6 +44,7 @@ object ManhuntEventRegistration {
         SpeedrunnerCommand.registerCmd(dispatcher)
         HuntersCommand.registerCmd(dispatcher)
         ClearCacheCommand.registerCmd(dispatcher)
+        TrackCommand.registerCmd(dispatcher)
     }
 
     /**
