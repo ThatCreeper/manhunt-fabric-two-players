@@ -28,7 +28,7 @@
   "text.autoconfig.manhunt.option.runnerBehaviour.@Tooltip[3]": "CompassSwitching = Hunters can switch compasses using a command, unlimited runners.",
   "text.autoconfig.manhunt.option.runnerBehaviour.@Tooltip[5]": "ClosestRunner = Hunter's compass points at closest runner.",
 
-  "text.manhunt.command.speedrunner.set": "Set speedrunner to %s!",
+  "text.manhunt.command.speedrunner.set": "Added speedrunner %s!",
   "text.manhunt.command.hunters.clear": "Cleared hunter list!",
   "text.manhunt.command.hunters.add": "Added %s to the hunters list!",
   "text.manhunt.command.hunters.get": "Hunters are: %s",

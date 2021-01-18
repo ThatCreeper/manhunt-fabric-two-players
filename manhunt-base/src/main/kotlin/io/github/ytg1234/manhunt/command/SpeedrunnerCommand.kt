@@ -2,10 +2,12 @@ package io.github.ytg1234.manhunt.command
 
 import com.mojang.brigadier.Command
 import com.mojang.brigadier.context.CommandContext
+import io.github.ytg1234.manhunt.base.CONFIG
 import io.github.ytg1234.manhunt.base.UserVars.hunters
 import io.github.ytg1234.manhunt.base.UserVars.speedrunners
 import io.github.ytg1234.manhunt.base.fromCmdContext
 import io.github.ytg1234.manhunt.base.ifHasMod
+import io.github.ytg1234.manhunt.config.Runners
 import io.github.ytg1234.manhunt.util.PermedCommand
 import io.github.ytg1234.manhunt.util.plus
 import io.github.ytg1234.manhunt.util.reset
@@ -52,6 +54,7 @@ object SpeedrunnerCommand : PermedCommand("speedrunners", "manhunt.command.speed
             )
         }
 
+        if (CONFIG!!.runnerBehaviour == Runners.Dream) speedrunners.clear()
         speedrunners.add(target.uuid)
         context.source.sendFeedback(
             ifHasMod(
