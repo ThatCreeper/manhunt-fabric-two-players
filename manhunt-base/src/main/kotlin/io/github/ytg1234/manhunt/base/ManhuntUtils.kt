@@ -15,6 +15,7 @@ import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.Identifier
 import org.apache.logging.log4j.LogManager
 import org.jetbrains.annotations.Contract
+import java.util.Optional
 import java.util.UUID
 
 /**
@@ -26,12 +27,6 @@ const val MOD_ID = "manhunt"
  * The name of the mod.
  */
 const val MOD_NAME = "Manhunt Fabric"
-
-/**
- * Contains all the currently active hunters.
- */
-@JvmField
-val hunters: MutableList<UUID> = mutableListOf()
 
 /**
  * Contains the [Identifier] of the question packet.
@@ -46,23 +41,10 @@ val SERVER_QUESTION_PACKET_ID: Identifier = Identifier(MOD_ID, "question")
 val CLIENT_ANSWER_PACKET_ID: Identifier = Identifier(MOD_ID, "answer")
 
 /**
- * Contains every [player][PlayerEntity] that has the mod
- * on their client.
- */
-@JvmField
-val haveMod: MutableList<PlayerEntity> = mutableListOf()
-
-/**
  * Manhunt's [Log4j logger][org.apache.logging.log4j.Logger]
  */
 @JvmField
 val LOGGER = LogManager.getLogger(MOD_NAME)!!
-
-/**
- * Contains the currently active speedrunner.
- */
-@JvmField
-var speedrunner: UUID? = null
 
 /**
  * The one and only Manhunt configuration.
@@ -81,8 +63,19 @@ var CONFIG: ManhuntConfig? = null
 fun playerHasMod(context: CommandContext<ServerCommandSource>): Boolean {
     return context.source.entity != null &&
             context.source.entity is PlayerEntity &&
-            haveMod.contains(context.source.player)
+            UserVars.haveMod.contains(context.source.player)
 }
+
+/**
+ * Gets a [PlayerEntity] from a [CommandContext] and an optional [UUID].
+ *
+ * @param ctx the context to get the server from
+ * @param uuid the UUID of the player to get
+ *
+ * @return the nullable [ServerPlayerEntity] object if the optional is present, `null` otherwise.
+ */
+@Contract(pure = true)
+fun fromCmdContext(ctx: CommandContext<ServerCommandSource>, uuid: Optional<UUID>) = fromServer(ctx.source.minecraftServer, uuid)
 
 /**
  * Gets a [PlayerEntity] from a [CommandContext] and a [UUID].
@@ -90,11 +83,23 @@ fun playerHasMod(context: CommandContext<ServerCommandSource>): Boolean {
  * @param ctx the context to get the server from
  * @param uuid the UUID of the player to get
  *
- * @return the [ServerPlayerEntity] object
+ * @return a nullable [ServerPlayerEntity] object that will contain the player is found.
  */
 @Contract(pure = true)
-fun fromCmdContext(ctx: CommandContext<ServerCommandSource>, uuid: UUID?): ServerPlayerEntity? {
-    return fromServer(ctx.source.minecraftServer, uuid)
+fun fromCmdContext(ctx: CommandContext<ServerCommandSource>, uuid: UUID) = fromServer(ctx.source.minecraftServer, uuid)
+
+/**
+ * Gets a [PlayerEntity] that is connected to a [MinecraftServer]
+ * using an optional [UUID].
+ *
+ * @param server the server to get the player from
+ * @param uuid the UUID of the player
+ *
+ * @return the nullable [ServerPlayerEntity] object if optional is present, otherwise `null`
+ */
+@Contract(pure = true)
+fun fromServer(server: MinecraftServer, uuid: Optional<UUID>): ServerPlayerEntity? {
+    return if (!uuid.isPresent) null else fromServer(server, uuid.get())
 }
 
 /**
@@ -107,9 +112,7 @@ fun fromCmdContext(ctx: CommandContext<ServerCommandSource>, uuid: UUID?): Serve
  * @return the [ServerPlayerEntity] object
  */
 @Contract(pure = true)
-fun fromServer(server: MinecraftServer, uuid: UUID?): ServerPlayerEntity? {
-    return if (uuid == null) null else server.playerManager.getPlayer(uuid)
-}
+fun fromServer(server: MinecraftServer, uuid: UUID): ServerPlayerEntity? = server.playerManager.getPlayer(uuid)
 
 /**
  * Receives an [ItemStack] and a [ServerPlayerEntity], assuming
@@ -159,4 +162,25 @@ fun updateCompass(compass: ItemStack, target: ServerPlayerEntity?): ItemStack {
 @Contract(mutates = "param1")
 fun applyStatusEffectToPlayer(player: PlayerEntity, effect: StatusEffect?): Boolean {
     return player.addStatusEffect(StatusEffectInstance(effect, 2, 0, false, false))
+}
+
+object UserVars {
+    /**
+     * Contains all the currently active hunters.
+     */
+    @JvmField
+    val hunters: MutableList<UUID> = mutableListOf()
+
+    /**
+     * Contains the currently active speedrunner.
+     */
+    @JvmField
+    var speedrunner: Optional<UUID> = Optional.empty()
+
+    /**
+     * Contains every [player][PlayerEntity] that has the mod
+     * on their client.
+     */
+    @JvmField
+    val haveMod: MutableList<PlayerEntity> = mutableListOf()
 }

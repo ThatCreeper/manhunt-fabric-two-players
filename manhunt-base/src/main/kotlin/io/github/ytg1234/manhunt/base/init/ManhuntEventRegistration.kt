@@ -3,7 +3,7 @@ package io.github.ytg1234.manhunt.base.init
 import com.mojang.brigadier.CommandDispatcher
 import io.github.ytg1234.manhunt.base.CLIENT_ANSWER_PACKET_ID
 import io.github.ytg1234.manhunt.base.SERVER_QUESTION_PACKET_ID
-import io.github.ytg1234.manhunt.base.haveMod
+import io.github.ytg1234.manhunt.base.UserVars
 import io.github.ytg1234.manhunt.command.ClearCacheCommand
 import io.github.ytg1234.manhunt.command.HuntersCommand
 import io.github.ytg1234.manhunt.command.SpeedrunnerCommand
@@ -32,7 +32,7 @@ object ManhuntEventRegistration {
         UseItemCallback.EVENT.register(ManhuntInteractions::pointCompass)
 
         ServerPlayNetworking.registerGlobalReceiver(CLIENT_ANSWER_PACKET_ID) { server, player, _, _, _ ->
-            server.execute { if (!haveMod.contains(player)) haveMod.add(player) }
+            server.execute { if (!UserVars.haveMod.contains(player)) UserVars.haveMod.add(player) }
         }
     }
 

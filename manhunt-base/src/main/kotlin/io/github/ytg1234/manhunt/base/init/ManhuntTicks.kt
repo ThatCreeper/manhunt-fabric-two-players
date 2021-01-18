@@ -4,8 +4,8 @@ import io.github.ytg1234.manhunt.api.event.callback.SpeedrunnerGlowCallback
 import io.github.ytg1234.manhunt.base.CONFIG
 import io.github.ytg1234.manhunt.base.applyStatusEffectToPlayer
 import io.github.ytg1234.manhunt.base.fromServer
-import io.github.ytg1234.manhunt.base.hunters
-import io.github.ytg1234.manhunt.base.speedrunner
+import io.github.ytg1234.manhunt.base.UserVars.hunters
+import io.github.ytg1234.manhunt.base.UserVars.speedrunner
 import io.github.ytg1234.manhunt.base.updateCompass
 import io.github.ytg1234.manhunt.config.Compass
 import net.minecraft.entity.effect.StatusEffects

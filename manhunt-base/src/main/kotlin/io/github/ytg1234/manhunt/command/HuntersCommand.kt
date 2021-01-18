@@ -4,9 +4,9 @@ import com.mojang.brigadier.Command
 import com.mojang.brigadier.context.CommandContext
 import io.github.ytg1234.manhunt.base.CONFIG
 import io.github.ytg1234.manhunt.base.fromCmdContext
-import io.github.ytg1234.manhunt.base.hunters
+import io.github.ytg1234.manhunt.base.UserVars.hunters
 import io.github.ytg1234.manhunt.base.playerHasMod
-import io.github.ytg1234.manhunt.base.speedrunner
+import io.github.ytg1234.manhunt.base.UserVars.speedrunner
 import io.github.ytg1234.manhunt.util.PermedCommand
 import io.github.ytg1234.manhunt.util.plus
 import io.github.ytg1234.manhunt.util.reset
@@ -63,7 +63,7 @@ object HuntersCommand : PermedCommand("hunters", "manhunt.command.hunters", 2) {
         val playerHasMod: Boolean = playerHasMod(context)
 
         // Target is speedrunner
-        if (target.uuid == speedrunner) {
+        if (target.uuid == speedrunner.orElse(null)) { // hacky optional work here
             // We check if the source is a player and the player has the mod
             if (playerHasMod) {
                 // We send error message using TranslatableText

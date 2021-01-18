@@ -2,7 +2,7 @@ package io.github.ytg1234.manhunt.command
 
 import com.mojang.brigadier.Command
 import io.github.ytg1234.manhunt.base.SERVER_QUESTION_PACKET_ID
-import io.github.ytg1234.manhunt.base.haveMod
+import io.github.ytg1234.manhunt.base.UserVars.haveMod
 import io.github.ytg1234.manhunt.util.PermedCommand
 import mc.aegis.AegisCommandBuilder
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs

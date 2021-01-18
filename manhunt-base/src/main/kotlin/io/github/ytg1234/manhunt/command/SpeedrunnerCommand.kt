@@ -3,9 +3,9 @@ package io.github.ytg1234.manhunt.command
 import com.mojang.brigadier.Command
 import com.mojang.brigadier.context.CommandContext
 import io.github.ytg1234.manhunt.base.fromCmdContext
-import io.github.ytg1234.manhunt.base.hunters
+import io.github.ytg1234.manhunt.base.UserVars.hunters
 import io.github.ytg1234.manhunt.base.playerHasMod
-import io.github.ytg1234.manhunt.base.speedrunner
+import io.github.ytg1234.manhunt.base.UserVars.speedrunner
 import io.github.ytg1234.manhunt.util.PermedCommand
 import io.github.ytg1234.manhunt.util.plus
 import io.github.ytg1234.manhunt.util.reset
@@ -14,6 +14,7 @@ import net.minecraft.command.argument.EntityArgumentType
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
 import net.minecraft.text.TranslatableText
+import java.util.Optional
 
 /**
  * Used to control the [speedrunner].
@@ -58,7 +59,7 @@ object SpeedrunnerCommand : PermedCommand("speedrunner", "manhunt.command.speedr
             }
             return Command.SINGLE_SUCCESS
         }
-        speedrunner = target.uuid
+        speedrunner = Optional.of(target.uuid)
         if (playerHasMod) {
             context.source
                 .sendFeedback(
@@ -106,7 +107,7 @@ object SpeedrunnerCommand : PermedCommand("speedrunner", "manhunt.command.speedr
      */
     private fun executeClear(context: CommandContext<ServerCommandSource>): Int {
         val playerHasMod: Boolean = playerHasMod(context)
-        speedrunner = null
+        speedrunner = Optional.empty()
         if (playerHasMod) {
             context.source.sendFeedback(TranslatableText("text.manhunt.command.speedrunner.clear"), true)
         } else {
