@@ -47,7 +47,7 @@ object ManhuntTicks {
                     stack = fromServer(server, hunterUuid)!!.inventory.getStack(8)
                 }
             }
-            if (CONFIG!!.compassBehaviour == Compass.UPDATE) {
+            if (CONFIG!!.compassBehaviour == Compass.Update) {
                 // Set compass NBT
                 if (stack.item == Items.COMPASS) {
                     fromServer(server, hunterUuid)!!.equip(

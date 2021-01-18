@@ -1,13 +1,13 @@
 {
   "text.autoconfig.manhunt.option.compassBehaviour": "Compass Behavior",
-  "text.autoconfig.manhunt.option.compassBehaviour.@Tooltip[0]": "Sets the behavior of the compass mechanic, can be either UPDATE or USE.",
-  "text.autoconfig.manhunt.option.compassBehaviour.@Tooltip[1]": "UPDATE = Automatically update the compass every tick",
-  "text.autoconfig.manhunt.option.compassBehaviour.@Tooltip[2]": "USE = Use the compass to update it (like Dream's manhunt).",
+  "text.autoconfig.manhunt.option.compassBehaviour.@Tooltip[0]": "Sets the behavior of the compass mechanic, can be either Update or Use.",
+  "text.autoconfig.manhunt.option.compassBehaviour.@Tooltip[1]": "Update = Automatically update the compass every tick",
+  "text.autoconfig.manhunt.option.compassBehaviour.@Tooltip[2]": "Use = Use the compass to update it (like Dream's manhunt).",
 
   "text.autoconfig.manhunt.option.damageBehaviour": "Damage Behavior",
-  "text.autoconfig.manhunt.option.damageBehaviour.@Tooltip[0]": "Sets the behavior of the damage mechanic, can be either KILL or DAMAGE.",
-  "text.autoconfig.manhunt.option.damageBehaviour.@Tooltip[1]": "KILL = The speedrunner loses when they are killed (like Dream's manhunt).",
-  "text.autoconfig.manhunt.option.damageBehaviour.@Tooltip[2]": "DAMAGE = The speedrunner loses when they take damage (like dream's assassin).",
+  "text.autoconfig.manhunt.option.damageBehaviour.@Tooltip[0]": "Sets the behavior of the damage mechanic, can be either Kill or Damage.",
+  "text.autoconfig.manhunt.option.damageBehaviour.@Tooltip[1]": "Kill = The speedrunner loses when they are killed (like Dream's manhunt).",
+  "text.autoconfig.manhunt.option.damageBehaviour.@Tooltip[2]": "Damage = The speedrunner loses when they take damage (like dream's assassin).",
 
   "text.autoconfig.manhunt.option.freeze": "Freeze hunter when looked at",
 
@@ -21,6 +21,13 @@
 
   "text.autoconfig.manhunt.option.giveCompassWhenSettingHunters": "Force hunters to have a compass",
   "text.autoconfig.manhunt.option.giveCompassWhenSettingHunters.@Tooltip": "Gives a compass to hunters while being added and forces it upon them.",
+
+  "text.autoconfig.manhunt.option.runnerBehaviour": "Multirunner",
+  "text.autoconfig.manhunt.option.runnerBehaviour.@Tooltip[0]": "Multirunner settings. Can be Dream (default), MultiCompass, CompassSwitching or ClosestRunner.",
+  "text.autoconfig.manhunt.option.runnerBehaviour.@Tooltip[1]": "Dream = Normal Manhunt.",
+  "text.autoconfig.manhunt.option.runnerBehaviour.@Tooltip[2]": "MultiCompass = All hunters receive multiple compasses, then there can't be more than 36 speedrunners.",
+  "text.autoconfig.manhunt.option.runnerBehaviour.@Tooltip[3]": "CompassSwitching = Hunters can switch compasses using a command, unlimited runners.",
+  "text.autoconfig.manhunt.option.runnerBehaviour.@Tooltip[5]": "ClosestRunner = Hunter's compass points at closest runner.",
 
   "text.manhunt.command.speedrunner.set": "Set speedrunner to %s!",
   "text.manhunt.command.hunters.clear": "Cleared hunter list!",

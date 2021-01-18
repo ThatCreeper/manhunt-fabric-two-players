@@ -9,12 +9,12 @@ enum class Compass {
     /**
      * Compass Updates automatically every tick.
      */
-    UPDATE,
+    Update,
 
     /**
      * Hunter has to use compass to update it.
      */
-    USE
+    Use
 }
 
 /**
@@ -26,10 +26,39 @@ enum class Damage {
     /**
      * The speedrunner dies when they take damage.
      */
-    DAMAGE,
+    Damage,
 
     /**
      * The speedrunner dies when they die, like normal Minecraft.
      */
-    KILL
+    Kill
+}
+
+/**
+ * Speedrunner mode, support for multiple runners.
+ *
+ * @author YTG1234
+ */
+enum class Runners {
+    /**
+     * One speedrunner, Dream-like.
+     */
+    Dream,
+
+    /**
+     * All hunters receive multiple compasses,
+     * then there can't be more than 36 speedrunners.
+     */
+    MultiCompass,
+
+    /**
+     * Hunters can switch compasses using a
+     * command, unlimited runners.
+     */
+    CompassSwitching,
+
+    /**
+     * Hunter's compass points at closest runner.
+     */
+    ClosestRunner
 }

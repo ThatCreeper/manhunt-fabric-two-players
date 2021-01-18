@@ -30,7 +30,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
             if (source.getAttacker() != null) {
                 if (source.getAttacker() instanceof PlayerEntity && ManhuntUtilsKt.hunters.contains(source.getAttacker().getUuid())) {
                     assert ManhuntUtilsKt.CONFIG != null;
-                    if (ManhuntUtilsKt.CONFIG.damageBehaviour.equals(Damage.DAMAGE) && !isInvulnerableTo(source)) {
+                    if (ManhuntUtilsKt.CONFIG.damageBehaviour.equals(Damage.Damage) && !isInvulnerableTo(source)) {
                         cir.setReturnValue(super.damage(source, Float.MAX_VALUE));
                     }
                 }

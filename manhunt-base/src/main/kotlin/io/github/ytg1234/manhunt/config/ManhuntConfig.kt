@@ -15,28 +15,28 @@ import java.util.ArrayList
 @Config(name = "manhunt")
 class ManhuntConfig : ConfigData {
     /**
-     * Sets the behaviour of the compass mechanic, can be either [UPDATE][Compass.UPDATE] or [USE][Compass.USE].
+     * Sets the behaviour of the compass mechanic, can be either [Update][Compass.Update] or [Use][Compass.Use].
      *
-     * [UPDATE][Compass.UPDATE] = Automatically update the compass every tick.
-     * [USE][Compass.USE] = Use the compass to update it (more like Dream's manhunt).
+     * [Update][Compass.Update] = Automatically update the compass every tick.
+     * [Use][Compass.Use] = Use the compass to update it (more like Dream's manhunt).
      */
     @EnumHandler(option = EnumHandler.EnumDisplayOption.BUTTON)
-    @Comment("Sets the behaviour of the compass mechanic, can be either UPDATE or USE. UPDATE = Automatically update the compass every tick. USE = Use the compass to update it (more like Dream's manhunt).")
+    @Comment("Sets the behaviour of the compass mechanic, can be either Update or Use. Update = Automatically update the compass every tick. Use = Use the compass to update it (more like Dream's manhunt).")
     @ConfigEntry.Gui.Tooltip(count = 3)
     @JvmField
-    var compassBehaviour = Compass.USE
+    var compassBehaviour = Compass.Use
 
     /**
-     * Sets the behaviour of the damage mechanic. Can be either [KILL][Damage.KILL] or [DAMAGE][Damage.DAMAGE].
+     * Sets the behaviour of the damage mechanic. Can be either [Kill][Damage.Kill] or [Damage][Damage.Damage].
      *
-     * [KILL][Damage.KILL] = The speedrunner loses when they are killed (like Dream's manhunt).
-     * [DAMAGE][Damage.DAMAGE] = The speedrunner loses when they take damage (like dream's assassin).
+     * [Kill][Damage.Kill] = The speedrunner loses when they are killed (like Dream's manhunt).
+     * [Damage][Damage.Damage] = The speedrunner loses when they take damage (like dream's assassin).
      */
     @EnumHandler(option = EnumHandler.EnumDisplayOption.BUTTON)
-    @Comment("Sets the behaviour of the damage mechanic. Can be either KILL or DAMAGE. KILL = The speedrunner loses when they are killed (like Dream's manhunt). DAMAGE = The speedrunner loses when they take damage (like dream's assassin).")
+    @Comment("Sets the behaviour of the damage mechanic. Can be either Kill or Damage. Kill = The speedrunner loses when they are killed (like Dream's manhunt). Damage = The speedrunner loses when they take damage (like dream's assassin).")
     @ConfigEntry.Gui.Tooltip(count = 3)
     @JvmField
-    var damageBehaviour = Damage.KILL
+    var damageBehaviour = Damage.Kill
 
     /**
      * If true, gives players a compass when added to the hunters list.
@@ -62,5 +62,10 @@ class ManhuntConfig : ConfigData {
     @ConfigEntry.Gui.Tooltip
     @JvmField
     var highlightSpeedrunner = false
-}
 
+    @EnumHandler(option = EnumHandler.EnumDisplayOption.BUTTON)
+    @Comment("Multirunner settings. Can be Dream (default), MultiCompass, CompassSwitching or ClosestRunner. Dream = Normal Manhunt. MultiCompass = All hunters receive multiple compasses, then there can't be more than 36 speedrunners. CompassSwitching = Hunters can switch compasses using a command, unlimited runners. ClosestRunner = Hunter's compass points at closest runner.")
+    @ConfigEntry.Gui.Tooltip(count = 5)
+    @JvmField
+    var runnerBehaviour = Runners.Dream
+}

@@ -34,7 +34,7 @@ object ManhuntInteractions {
 
         // If user is not sneaking we don't need
         if (user.isSneaking &&
-            CONFIG!!.compassBehaviour == Compass.USE &&
+            CONFIG!!.compassBehaviour == Compass.Use &&
             hunters.contains(user.uuid)
         ) {
             // On the client we'll just return
