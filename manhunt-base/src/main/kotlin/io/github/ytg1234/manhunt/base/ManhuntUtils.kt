@@ -3,6 +3,8 @@ package io.github.ytg1234.manhunt.base
 import com.mojang.brigadier.context.CommandContext
 import io.github.ytg1234.manhunt.api.event.callback.CompassUpdateCallback
 import io.github.ytg1234.manhunt.config.ManhuntConfig
+import io.github.ytg1234.manhunt.config.Runners
+import io.github.ytg1234.manhunt.util.string
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffect
 import net.minecraft.entity.effect.StatusEffectInstance
@@ -66,6 +68,10 @@ fun playerHasMod(context: CommandContext<ServerCommandSource>): Boolean {
             UserVars.haveMod.contains(context.source.player)
 }
 
+fun <A> ifHasMod(ctx: CommandContext<ServerCommandSource>, has: A, `else`: A): A {
+    return if (playerHasMod(ctx)) has else `else`
+}
+
 /**
  * Gets a [PlayerEntity] from a [CommandContext] and an optional [UUID].
  *
@@ -75,7 +81,8 @@ fun playerHasMod(context: CommandContext<ServerCommandSource>): Boolean {
  * @return the nullable [ServerPlayerEntity] object if the optional is present, `null` otherwise.
  */
 @Contract(pure = true)
-fun fromCmdContext(ctx: CommandContext<ServerCommandSource>, uuid: Optional<UUID>) = fromServer(ctx.source.minecraftServer, uuid)
+fun fromCmdContext(ctx: CommandContext<ServerCommandSource>, uuid: Optional<UUID>) =
+    fromServer(ctx.source.minecraftServer, uuid)
 
 /**
  * Gets a [PlayerEntity] from a [CommandContext] and a [UUID].
@@ -131,14 +138,14 @@ fun updateCompass(compass: ItemStack, target: ServerPlayerEntity?): ItemStack {
         return compass.copy()
     }
     // Is dimension disabled?
-    if (CONFIG!!.disabledDimensions.contains(target.serverWorld.registryKey.value.toString())) return compass.copy()
+    if (CONFIG!!.disabledDimensions.contains(target.serverWorld.registryKey.value.string)) return compass.copy()
 
     // Continue Updating
     val oldCompass = compass.copy()
     var newCompass = compass.copy()
     val itemTag = newCompass.orCreateTag.copy()
     itemTag.putBoolean("LodestoneTracked", false)
-    itemTag.putString("LodestoneDimension", target.serverWorld.registryKey.value.toString())
+    itemTag.putString("LodestoneDimension", target.serverWorld.registryKey.value.string)
     val lodestonePos = CompoundTag()
     lodestonePos.putInt("X", target.x.toInt())
     lodestonePos.putInt("Y", target.y.toInt())
@@ -172,10 +179,22 @@ object UserVars {
     val hunters: MutableList<UUID> = mutableListOf()
 
     /**
-     * Contains the currently active speedrunner.
+     * Contains the currently active speedrunners.
      */
     @JvmField
-    var speedrunner: Optional<UUID> = Optional.empty()
+    var speedrunners: MutableList<UUID> = mutableListOf()
+
+    /**
+     * Gets the currently active speedrunner (or empty) if singular,
+     * throws an exception otherwise.
+     */
+    @JvmStatic
+    val speedrunner: Optional<UUID>
+        get() = when (CONFIG!!.runnerBehaviour) {
+            Runners.Dream -> if (speedrunners.isEmpty()) Optional.empty() else Optional.of(speedrunners[0])
+            else -> throw IllegalStateException("Cannot get singular speedrunner when mode is not Dream!")
+        }
+
 
     /**
      * Contains every [player][PlayerEntity] that has the mod

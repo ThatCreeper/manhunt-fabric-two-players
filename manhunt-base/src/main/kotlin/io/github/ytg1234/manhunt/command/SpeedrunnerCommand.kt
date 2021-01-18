@@ -2,10 +2,10 @@ package io.github.ytg1234.manhunt.command
 
 import com.mojang.brigadier.Command
 import com.mojang.brigadier.context.CommandContext
-import io.github.ytg1234.manhunt.base.fromCmdContext
 import io.github.ytg1234.manhunt.base.UserVars.hunters
-import io.github.ytg1234.manhunt.base.playerHasMod
-import io.github.ytg1234.manhunt.base.UserVars.speedrunner
+import io.github.ytg1234.manhunt.base.UserVars.speedrunners
+import io.github.ytg1234.manhunt.base.fromCmdContext
+import io.github.ytg1234.manhunt.base.ifHasMod
 import io.github.ytg1234.manhunt.util.PermedCommand
 import io.github.ytg1234.manhunt.util.plus
 import io.github.ytg1234.manhunt.util.reset
@@ -14,18 +14,17 @@ import net.minecraft.command.argument.EntityArgumentType
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
 import net.minecraft.text.TranslatableText
-import java.util.Optional
 
 /**
- * Used to control the [speedrunner].
+ * Used to control the [speedrunners].
  *
  * @author YTG1234
  */
-object SpeedrunnerCommand : PermedCommand("speedrunner", "manhunt.command.speedrunner", 2) {
+object SpeedrunnerCommand : PermedCommand("speedrunners", "manhunt.command.speedrunner", 2) {
     override val cmd: AegisCommandBuilder.() -> AegisCommandBuilder = {
-        literal("set") {
+        literal("add") {
             custom(CommandManager.argument("target", EntityArgumentType.player())) {
-                executes(::executeSet)
+                executes(::executeAdd)
             }
         }
         literal("get") {
@@ -37,82 +36,74 @@ object SpeedrunnerCommand : PermedCommand("speedrunner", "manhunt.command.speedr
         this
     }
 
-    /**
-     * Changes the [speedrunner] to another player.
-     */
-    private fun executeSet(context: CommandContext<ServerCommandSource>): Int {
-        val playerHasMod: Boolean = playerHasMod(context)
+    private fun executeAdd(context: CommandContext<ServerCommandSource>): Int {
         val target = EntityArgumentType.getPlayer(context, "target")
+
         if (hunters.contains(target.uuid)) {
-            if (playerHasMod) {
-                context.source.sendError(
+            context.source.sendError(
+                ifHasMod(
+                    context,
                     TranslatableText(
                         "text.manhunt.command.speedrunner.error.hunter",
                         target.displayName
-                    )
+                    ),
+                    reset("Cannot add speedrunner ") + target.displayName + reset(" to the list because they are a hunter!")
                 )
-            } else {
-                context.source
-                    .sendError(
-                        reset("Cannot set speedrunner to ") + target.displayName + reset(" because they are a hunter!")
-                    )
-            }
-            return Command.SINGLE_SUCCESS
+            )
         }
-        speedrunner = Optional.of(target.uuid)
-        if (playerHasMod) {
-            context.source
-                .sendFeedback(
-                    TranslatableText(
-                        "text.manhunt.command.speedrunner.set",
-                        fromCmdContext(context, speedrunner)!!.displayName
-                    ), true
-                )
-        } else {
-            context.source
-                .sendFeedback(
-                    reset("Set speedrunner to ") + target.displayName + reset("!"),
-                    true
-                )
-        }
+
+        speedrunners.add(target.uuid)
+        context.source.sendFeedback(
+            ifHasMod(
+                context,
+                TranslatableText(
+                    "text.manhunt.command.speedrunner.set",
+                    target.displayName
+                ),
+                reset("Added speedrunner ") + target.displayName + reset("!"),
+            ),
+            true
+        )
         return Command.SINGLE_SUCCESS
     }
 
     /**
-     * Sends the [speedrunner]'s name.
+     * Sends the [speedrunners]'s name.
      */
     private fun executeGet(context: CommandContext<ServerCommandSource>): Int {
-        val playerHasMod: Boolean = playerHasMod(context)
-        if (speedrunner == null) return 1
-        if (playerHasMod) {
-            context.source
-                .sendFeedback(
-                    TranslatableText(
-                        "text.manhunt.command.speedrunner.get",
-                        fromCmdContext(context, speedrunner)!!.displayName
-                    ), false
-                )
-        } else {
-            context.source
-                .sendFeedback(
-                    reset("Speedrunner is currently: ") + fromCmdContext(context, speedrunner)!!.displayName,
-                    true
-                )
+        if (speedrunners.isEmpty()) return 1
+        val speedrunnerNames: List<String> = speedrunners.map {
+            fromCmdContext(context, it)!!.displayName.asString()!!
         }
+
+        context.source.sendFeedback(
+            ifHasMod(
+                context,
+                TranslatableText(
+                    "text.manhunt.command.speedrunner.get",
+                    java.lang.String.join(", ", speedrunnerNames)
+                ),
+                reset("Speedrunners are currently: ") + reset(java.lang.String.join(", ", speedrunnerNames)),
+            ),
+            true
+        )
+
         return Command.SINGLE_SUCCESS
     }
 
     /**
-     * Sets the [speedrunner] to `null`
+     * Sets the [speedrunners] to an empty list
      */
     private fun executeClear(context: CommandContext<ServerCommandSource>): Int {
-        val playerHasMod: Boolean = playerHasMod(context)
-        speedrunner = Optional.empty()
-        if (playerHasMod) {
-            context.source.sendFeedback(TranslatableText("text.manhunt.command.speedrunner.clear"), true)
-        } else {
-            context.source.sendFeedback(reset("Speedrunner Cleared!"), true)
-        }
+        speedrunners = mutableListOf()
+        context.source.sendFeedback(
+            ifHasMod(
+                context,
+                TranslatableText("text.manhunt.command.speedrunner.clear"),
+                reset("Speedrunner Cleared!")
+            ),
+            true
+        )
         return Command.SINGLE_SUCCESS
     }
 }

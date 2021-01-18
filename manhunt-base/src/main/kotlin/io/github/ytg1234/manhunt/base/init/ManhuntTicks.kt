@@ -5,7 +5,7 @@ import io.github.ytg1234.manhunt.base.CONFIG
 import io.github.ytg1234.manhunt.base.applyStatusEffectToPlayer
 import io.github.ytg1234.manhunt.base.fromServer
 import io.github.ytg1234.manhunt.base.UserVars.hunters
-import io.github.ytg1234.manhunt.base.UserVars.speedrunner
+import io.github.ytg1234.manhunt.base.UserVars.speedrunners
 import io.github.ytg1234.manhunt.base.updateCompass
 import io.github.ytg1234.manhunt.config.Compass
 import net.minecraft.entity.effect.StatusEffects
@@ -52,7 +52,7 @@ object ManhuntTicks {
                 if (stack.item == Items.COMPASS) {
                     fromServer(server, hunterUuid)!!.equip(
                         8,
-                        updateCompass(stack, fromServer(server, speedrunner))
+                        updateCompass(stack, fromServer(server, speedrunners))
                     )
                 }
             }
@@ -69,9 +69,9 @@ object ManhuntTicks {
         // If speedrunner is null, bad.
         if (CONFIG!!.highlightSpeedrunner) {
             val toCancel =
-                SpeedrunnerGlowCallback.EVENT.invoker().onSpeedrunnerGlow(fromServer(server, speedrunner))
-            if (!toCancel && speedrunner != null) applyStatusEffectToPlayer(
-                fromServer(server, speedrunner)!!,
+                SpeedrunnerGlowCallback.EVENT.invoker().onSpeedrunnerGlow(fromServer(server, speedrunners))
+            if (!toCancel && speedrunners != null) applyStatusEffectToPlayer(
+                fromServer(server, speedrunners)!!,
                 StatusEffects.GLOWING
             )
         }
