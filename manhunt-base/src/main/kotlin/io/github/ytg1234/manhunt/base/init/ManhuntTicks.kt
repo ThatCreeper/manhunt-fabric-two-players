@@ -2,11 +2,11 @@ package io.github.ytg1234.manhunt.base.init
 
 import io.github.ytg1234.manhunt.api.event.callback.SpeedrunnerGlowCallback
 import io.github.ytg1234.manhunt.base.CONFIG
-import io.github.ytg1234.manhunt.base.applyStatusEffectToPlayer
-import io.github.ytg1234.manhunt.base.fromServer
 import io.github.ytg1234.manhunt.base.UserVars.hunters
 import io.github.ytg1234.manhunt.base.UserVars.speedrunners
-import io.github.ytg1234.manhunt.base.updateCompass
+import io.github.ytg1234.manhunt.base.applyStatusEffectToPlayer
+import io.github.ytg1234.manhunt.base.decideUpdate
+import io.github.ytg1234.manhunt.base.fromServer
 import io.github.ytg1234.manhunt.config.Compass
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.item.ItemStack
@@ -52,7 +52,7 @@ object ManhuntTicks {
                 if (stack.item == Items.COMPASS) {
                     fromServer(server, hunterUuid)!!.equip(
                         8,
-                        updateCompass(stack, fromServer(server, speedrunners))
+                        decideUpdate(fromServer(server, hunterUuid)!!, stack)
                     )
                 }
             }
@@ -68,12 +68,13 @@ object ManhuntTicks {
     private fun highlightSpeedrunner(server: MinecraftServer) {
         // If speedrunner is null, bad.
         if (CONFIG!!.highlightSpeedrunner) {
-            val toCancel =
-                SpeedrunnerGlowCallback.EVENT.invoker().onSpeedrunnerGlow(fromServer(server, speedrunners))
-            if (!toCancel && speedrunners != null) applyStatusEffectToPlayer(
-                fromServer(server, speedrunners)!!,
-                StatusEffects.GLOWING
-            )
+            if (speedrunners.isNotEmpty()) {
+                speedrunners.forEach {
+                    val toCancel =
+                        SpeedrunnerGlowCallback.EVENT.invoker().onSpeedrunnerGlow(fromServer(server, it))
+                    if (!toCancel) applyStatusEffectToPlayer(fromServer(server, it)!!, StatusEffects.GLOWING)
+                }
+            }
         }
     }
 }

@@ -161,14 +161,17 @@ fun decideUpdate(hunter: ServerPlayerEntity, compass: ItemStack): ItemStack {
         Runners.Dream -> updateCompass(compass, fromServer(hunter.server, UserVars.speedrunner))
         Runners.CompassSwitching -> updateCompass(
             compass,
-            if (UserVars.trackMap[hunter.uuid] != null) fromServer(hunter.server, UserVars.trackMap[hunter.uuid]!!) else null
+            if (UserVars.trackMap[hunter.uuid] != null) fromServer(
+                hunter.server,
+                UserVars.trackMap[hunter.uuid]!!
+            ) else null
         )
         Runners.ClosestRunner -> updateCompass(compass, getClosestPlayer(hunter))
     }
 }
 
-fun getClosestPlayer(player: ServerPlayerEntity): ServerPlayerEntity {
-    TODO()
+fun getClosestPlayer(player: ServerPlayerEntity): ServerPlayerEntity? {
+    return player.serverWorld.getClosestPlayer(player, Double.MAX_VALUE) as ServerPlayerEntity?
 }
 
 /**
