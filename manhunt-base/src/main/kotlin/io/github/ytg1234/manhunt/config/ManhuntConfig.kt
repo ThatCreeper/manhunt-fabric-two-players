@@ -64,8 +64,8 @@ class ManhuntConfig : ConfigData {
     var highlightSpeedrunner = false
 
     @EnumHandler(option = EnumHandler.EnumDisplayOption.BUTTON)
-    @Comment("Multirunner settings. Can be Dream (default), MultiCompass, CompassSwitching or ClosestRunner. Dream = Normal Manhunt. MultiCompass = All hunters receive multiple compasses, then there can't be more than 36 speedrunners. CompassSwitching = Hunters can switch compasses using a command, unlimited runners. ClosestRunner = Hunter's compass points at closest runner.")
-    @ConfigEntry.Gui.Tooltip(count = 5)
+    @Comment("Multirunner settings. Can be Dream (default), CompassSwitching or ClosestRunner. Dream = Normal Manhunt. CompassSwitching = Hunters can switch compasses using a command, unlimited runners. ClosestRunner = Hunter's compass points at closest runner.")
+    @ConfigEntry.Gui.Tooltip(count = 4)
     @JvmField
     var runnerBehaviour = Runners.Dream
 }

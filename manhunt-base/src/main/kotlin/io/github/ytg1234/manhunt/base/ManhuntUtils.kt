@@ -156,6 +156,21 @@ fun updateCompass(compass: ItemStack, target: ServerPlayerEntity?): ItemStack {
     return newCompass
 }
 
+fun decideUpdate(hunter: ServerPlayerEntity, compass: ItemStack): ItemStack {
+    return when (CONFIG!!.runnerBehaviour) {
+        Runners.Dream -> updateCompass(compass, fromServer(hunter.server, UserVars.speedrunner))
+        Runners.CompassSwitching -> updateCompass(
+            compass,
+            if (UserVars.trackMap[hunter.uuid] != null) fromServer(hunter.server, UserVars.trackMap[hunter.uuid]!!) else null
+        )
+        Runners.ClosestRunner -> updateCompass(compass, getClosestPlayer(hunter))
+    }
+}
+
+fun getClosestPlayer(player: ServerPlayerEntity): ServerPlayerEntity {
+    TODO()
+}
+
 /**
  * Applies the specified status effect to a player for 2 ticks.
  *
@@ -193,6 +208,13 @@ object UserVars {
         get() = when (CONFIG!!.runnerBehaviour) {
             Runners.Dream -> if (speedrunners.isEmpty()) Optional.empty() else Optional.of(speedrunners[0])
             else -> throw IllegalStateException("Cannot get singular speedrunner when mode is not Dream!")
+        }
+
+    private val whosTracking: MutableMap<UUID, UUID> = mutableMapOf()
+    val trackMap: MutableMap<UUID, UUID>
+        get() = when (CONFIG!!.runnerBehaviour) {
+            Runners.CompassSwitching -> whosTracking
+            else -> throw IllegalStateException("Cannot get tracking map when not in switching mode!")
         }
 
 

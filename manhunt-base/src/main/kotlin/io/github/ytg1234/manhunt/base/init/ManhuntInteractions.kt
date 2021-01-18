@@ -4,12 +4,14 @@ import io.github.ytg1234.manhunt.base.CONFIG
 import io.github.ytg1234.manhunt.base.fromServer
 import io.github.ytg1234.manhunt.base.UserVars.hunters
 import io.github.ytg1234.manhunt.base.UserVars.speedrunners
+import io.github.ytg1234.manhunt.base.decideUpdate
 import io.github.ytg1234.manhunt.base.updateCompass
 import io.github.ytg1234.manhunt.config.Compass
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.CompassItem
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
+import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
 import net.minecraft.world.World
@@ -29,7 +31,7 @@ object ManhuntInteractions {
      *
      * @see net.fabricmc.fabric.api.event.player.UseItemCallback.interact
      */
-    fun pointCompass(user: PlayerEntity, world: World, hand: Hand): TypedActionResult<ItemStack?>? {
+    fun pointCompass(user: PlayerEntity, world: World, hand: Hand): TypedActionResult<ItemStack> {
         if (user.getStackInHand(hand).item !is CompassItem) return TypedActionResult.pass(user.getStackInHand(hand))
 
         // If user is not sneaking we don't need
@@ -43,7 +45,7 @@ object ManhuntInteractions {
                 if (stack.item == Items.COMPASS) {
                     user.equip(
                         8,
-                        updateCompass(stack, fromServer(user.server!!, speedrunners))
+                        decideUpdate(user as ServerPlayerEntity, stack)
                     )
                 }
             }

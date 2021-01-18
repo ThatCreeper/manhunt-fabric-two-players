@@ -23,9 +23,8 @@
   "text.autoconfig.manhunt.option.giveCompassWhenSettingHunters.@Tooltip": "Gives a compass to hunters while being added and forces it upon them.",
 
   "text.autoconfig.manhunt.option.runnerBehaviour": "Multirunner",
-  "text.autoconfig.manhunt.option.runnerBehaviour.@Tooltip[0]": "Multirunner settings. Can be Dream (default), MultiCompass, CompassSwitching or ClosestRunner.",
+  "text.autoconfig.manhunt.option.runnerBehaviour.@Tooltip[0]": "Multirunner settings. Can be Dream (default), CompassSwitching or ClosestRunner.",
   "text.autoconfig.manhunt.option.runnerBehaviour.@Tooltip[1]": "Dream = Normal Manhunt.",
-  "text.autoconfig.manhunt.option.runnerBehaviour.@Tooltip[2]": "MultiCompass = All hunters receive multiple compasses, then there can't be more than 36 speedrunners.",
   "text.autoconfig.manhunt.option.runnerBehaviour.@Tooltip[3]": "CompassSwitching = Hunters can switch compasses using a command, unlimited runners.",
   "text.autoconfig.manhunt.option.runnerBehaviour.@Tooltip[5]": "ClosestRunner = Hunter's compass points at closest runner.",
 

@@ -46,12 +46,6 @@ enum class Runners {
     Dream,
 
     /**
-     * All hunters receive multiple compasses,
-     * then there can't be more than 36 speedrunners.
-     */
-    MultiCompass,
-
-    /**
      * Hunters can switch compasses using a
      * command, unlimited runners.
      */
