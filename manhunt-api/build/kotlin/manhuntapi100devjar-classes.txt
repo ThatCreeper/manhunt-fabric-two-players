@@ -1,1 +1,0 @@
-/Users/yonatandafna/Documents/mcmods/manhunt/manhunt-api/build/classes/java/main/io/github/ytg1234/manhunt/api/event/callback/CompassUpdateCallback.class:/Users/yonatandafna/Documents/mcmods/manhunt/manhunt-api/build/classes/java/main/io/github/ytg1234/manhunt/api/event/callback/SpeedrunnerGlowCallback.class
