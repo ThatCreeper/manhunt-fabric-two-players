@@ -7,11 +7,24 @@ object Globals {
     const val baseVer = "1.1.0"
     const val autoConfigVer = "3.2.2"
     const val clothConfigVer = "4.8.2"
-    const val modmenuVer = "1.14.6+build.31"
+    const val modmenuVer = "1.15.0"
     const val aegisVer = "1.0.1"
 }
 
 repositories {
+    maven(url = "https://jitpack.io/") {
+        name = "Jitpack"
+        content {
+            includeGroup("com.github.P03W")
+        }
+    }
+
+	maven(url = "https://maven.terraformersmc.com/releases/") {
+		content {
+			includeGroup("com.terraformersmc")
+		}
+	}
+
     maven(url = "https://oss.sonatype.org/content/repositories/snapshots") {
         content {
             includeGroup("me.lucko")
@@ -27,7 +40,7 @@ dependencies {
     }
     include("me.sargunvohra.mcmods", "autoconfig1u", Globals.autoConfigVer)
 
-    modImplementation("io.github.prospector", "modmenu", Globals.modmenuVer)
+    modImplementation("com.terraformersmc", "modmenu", Globals.modmenuVer)
 
     modApi("me.shedaniel.cloth", "config-2", Globals.clothConfigVer) {
         exclude(group = "net.fabricmc.fabric-api")

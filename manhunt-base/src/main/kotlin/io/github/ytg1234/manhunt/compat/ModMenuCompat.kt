@@ -1,7 +1,7 @@
 package io.github.ytg1234.manhunt.compat
 
-import io.github.prospector.modmenu.api.ConfigScreenFactory
-import io.github.prospector.modmenu.api.ModMenuApi
+import com.terraformersmc.modmenu.api.ConfigScreenFactory
+import com.terraformersmc.modmenu.api.ModMenuApi
 import io.github.ytg1234.manhunt.config.ManhuntConfig
 import me.sargunvohra.mcmods.autoconfig1u.AutoConfig
 import net.fabricmc.api.EnvType
@@ -15,7 +15,7 @@ import net.fabricmc.api.Environment
 @Environment(EnvType.CLIENT)
 object ModMenuCompat : ModMenuApi {
     /**
-     * Used to construct a new config screen instance when your mod's
+     * Used to construct a new config screen instance when manhunt's
      * configuration button is selected on the mod menu screen. The
      * screen instance parameter is the active mod menu screen.
      *

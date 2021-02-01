@@ -11,9 +11,9 @@ plugins {
 
 object Globals {
     const val mcVer = "1.16.5"
-    const val yarnVer = "1"
-    const val loaderVer = "0.11.0"
-    const val fapiVer = "0.29.3+1.16"
+    const val yarnVer = "3"
+    const val loaderVer = "0.11.1"
+    const val fapiVer = "0.30.0+1.16"
     const val flkVer = "1.4.21+build.1"
 
     const val grp = "io.github.ytg1234"
@@ -32,16 +32,7 @@ allprojects {
     apply(plugin = "fabric-loom")
     apply(plugin = "org.jetbrains.kotlin.jvm")
     apply(plugin = "org.jetbrains.dokka")
-
-    repositories {
-        maven(url = "https://jitpack.io/") {
-            name = "Jitpack"
-            content {
-                includeGroup("com.github.P03W")
-            }
-        }
-    }
-
+   
     java {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -95,6 +86,11 @@ allprojects {
                     includes.from("Module.md")
                 }
             }
+        }
+
+        withType<Wrapper> {
+            gradleVersion = "6.8.1"
+            distributionType = Wrapper.DistributionType.ALL
         }
     }
 }

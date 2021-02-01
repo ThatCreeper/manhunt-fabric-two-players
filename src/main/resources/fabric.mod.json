@@ -8,7 +8,11 @@
     "YTG123"
   ],
   "contributors": [],
-  "contact": {},
+  "contact": {
+    "homepage": "https://github.com/YTG123-Mods/manhunt-fabric",
+    "sources": "https://github.com/YTG123-Mods/manhunt-fabric",
+    "issues": "https://github.com/YTG123-Mods/manhunt-fabric/issues"
+  },
   "license": "LGPL-3.0-or-later",
   "icon": "assets/manhunt/icon.png",
   "environment": "*",
@@ -26,5 +30,13 @@
   },
   "recommends": {
     "luckperms": "*"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "text.manhunt.docs": "https://github.com/YTG123-Mods/manhunt-fabric/wiki",
+        "text.manhunt.javadoc": "https://ytg123-mods.github.io/manhunt-fabric/"
+      }
+    }
   }
 }
