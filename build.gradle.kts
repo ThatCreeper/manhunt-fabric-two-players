@@ -1,5 +1,14 @@
 import com.modrinth.minotaur.TaskModrinthUpload
 
+buildscript {
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath("org.jfrog.buildinfo:build-info-extractor-gradle:4.+")
+	}
+}
+
 plugins {
     java
     id("fabric-loom") version "0.5-SNAPSHOT"
@@ -154,3 +163,5 @@ publishing {
         }
     }
 }
+
+apply(from = "https://raw.githubusercontent.com/YTG1234/scripts/main/scripts/gradle/artifactory.gradle")

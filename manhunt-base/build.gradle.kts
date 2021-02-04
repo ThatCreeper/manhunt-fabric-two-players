@@ -7,7 +7,7 @@ object Globals {
     const val baseVer = "1.1.0"
     const val autoConfigVer = "3.2.2"
     const val clothConfigVer = "4.8.2"
-    const val modmenuVer = "1.15.0"
+    const val modmenuVer = "1.16.5"
     const val aegisVer = "1.0.1"
 }
 
@@ -30,6 +30,8 @@ repositories {
             includeGroup("me.lucko")
         }
     }
+    
+    maven(url = "https://maven.terraformersmc.com/releases")
 }
 
 version = Globals.baseVer
