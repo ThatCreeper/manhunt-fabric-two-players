@@ -62,7 +62,9 @@ val LOGGER = LogManager.getLogger(MOD_NAME)!!
  * Contains the currently active speedrunner.
  */
 @JvmField
-var speedrunner: UUID? = null
+var speedrunnera: UUID? = null
+@JvmField
+var speedrunnerb: UUID? = null
 
 /**
  * The one and only Manhunt configuration.

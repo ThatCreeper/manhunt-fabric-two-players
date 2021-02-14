@@ -10,6 +10,7 @@ import io.github.ytg1234.manhunt.command.SpeedrunnerCommand
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback
 import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
@@ -29,7 +30,8 @@ object ManhuntEventRegistration {
         ServerTickEvents.END_SERVER_TICK.register(ManhuntTicks::centralTick)
 
         CommandRegistrationCallback.EVENT.register(::registerCommands)
-        UseItemCallback.EVENT.register(ManhuntInteractions::pointCompass)
+        UseItemCallback.EVENT.register(ManhuntInteractions::pointCompassA)
+        AttackBlockCallback.EVENT.register(ManhuntInteractions::pointCompassB)
 
         ServerPlayNetworking.registerGlobalReceiver(CLIENT_ANSWER_PACKET_ID) { server, player, _, _, _ ->
             server.execute { if (!haveMod.contains(player)) haveMod.add(player) }
